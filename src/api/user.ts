@@ -11,7 +11,11 @@ export interface LoginRes {
   token: string;
 }
 export function login(data: LoginData) {
-  return axios.post<LoginRes>('/api/user/login', data);
+  return axios.get<LoginRes>('/api/Token', {
+    params: {
+      pwd: data.password,
+    },
+  });
 }
 
 export function logout() {

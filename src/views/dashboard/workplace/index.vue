@@ -1,148 +1,170 @@
 <template>
   <div class="container">
-    <div class="left-side">
-      <div class="panel">
-        <Banner />
-        <DataPanel />
-        <ContentChart />
-      </div>
-      <a-grid :cols="24" :col-gap="16" :row-gap="16" style="margin-top: 16px">
-        <a-grid-item
-          :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
-        >
-          <PopularContent />
-        </a-grid-item>
-        <a-grid-item
-          :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
-        >
-          <CategoriesPercent />
-        </a-grid-item>
-      </a-grid>
-    </div>
-    <div class="right-side">
-      <a-grid :cols="24" :row-gap="16">
-        <a-grid-item :span="24">
-          <div class="panel moduler-wrap">
-            <QuickOperation />
-            <RecentlyVisited />
+    <a-checkbox-group v-model:model-value="checkCompanys">
+      <a-menu
+        :style="{ width: '300px', height: '100%' }"
+        :default-open-keys="['0']"
+        :default-selected-keys="['0_2']"
+        show-collapse-button
+        breakpoint="xl"
+      >
+        <a-menu-item @click="handleChangeAll">
+          <template #icon><icon-cloud /></template>
+          <div class="menu-item">
+            <span>{{ $t('workplace.checkAll') }}</span>
+            <a-checkbox disabled value="all" :indeterminate="indeterminate">
+            </a-checkbox>
           </div>
-        </a-grid-item>
-        <a-grid-item class="panel" :span="24">
-          <Carousel />
-        </a-grid-item>
-        <a-grid-item class="panel" :span="24">
-          <Announcement />
-        </a-grid-item>
-        <a-grid-item class="panel" :span="24">
-          <Docs />
-        </a-grid-item>
-      </a-grid>
+        </a-menu-item>
+        <a-menu-item
+          v-for="item in companys"
+          :key="item"
+          @click.capture.stop="menuItemClick(item)"
+        >
+          <template #icon><icon-cloud /></template>
+          <div class="menu-item">
+            <span>{{ item }}</span>
+            <a-checkbox disabled :value="item" @click="menuItemClick(item)">
+            </a-checkbox
+          ></div>
+        </a-menu-item>
+      </a-menu>
+    </a-checkbox-group>
+    <a-empty v-if="companys.length === 0" class="empty" />
+    <div v-else class="content-box">
+      <div class="content-body">
+        <a-tabs default-active-key="1" lazy-load>
+          <a-tab-pane key="1" :title="$t('workplace.applicationDashboard')">
+            <table-data type="1" :companys="checkCompanys" />
+          </a-tab-pane>
+          <a-tab-pane key="2" :title="$t('workplace.usageQuery')">
+            <table-data type="2" :companys="checkCompanys" />
+          </a-tab-pane>
+          <a-tab-pane key="3" :title="$t('workplace.userStatistics')">
+            <table-data type="3" :companys="checkCompanys" />
+          </a-tab-pane>
+          <a-tab-pane key="4" :title="$t('workplace.featureLog')">
+            <table-data type="4" :companys="checkCompanys" />
+          </a-tab-pane>
+        </a-tabs>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import Banner from './components/banner.vue';
-  import DataPanel from './components/data-panel.vue';
-  import ContentChart from './components/content-chart.vue';
-  import PopularContent from './components/popular-content.vue';
-  import CategoriesPercent from './components/categories-percent.vue';
-  import RecentlyVisited from './components/recently-visited.vue';
-  import QuickOperation from './components/quick-operation.vue';
-  import Announcement from './components/announcement.vue';
-  import Carousel from './components/carousel.vue';
-  import Docs from './components/docs.vue';
-</script>
+  import { ref, watch } from 'vue';
+  import { cloneDeep } from 'lodash';
+  import tableData from './components/table-data.vue';
+  import { getCompanys } from './api';
 
-<script lang="ts">
-  export default {
-    name: 'Dashboard', // If you want the include property of keep-alive to take effect, you must name the component
+  const companys = ref([]);
+  const checkCompanys = ref<string[]>([]);
+
+  /**
+   * 获取公司列表
+   */
+  const getCompanyList = async () => {
+    try {
+      const res: any = await getCompanys();
+      // 排序
+      const otherIndex = res.findIndex((item: string) => item === '其它');
+      if (otherIndex !== -1) {
+        const other = res.splice(otherIndex, 1);
+        res.push(...other);
+      }
+      companys.value = cloneDeep(res) || [];
+      checkCompanys.value = cloneDeep([...res, 'all']) || [];
+    } catch {
+      companys.value = [];
+    }
   };
+  getCompanyList();
+
+  /**
+   * menu点击事件
+   * @param value 公司名称
+   */
+  const menuItemClick = (value: string) => {
+    const index = checkCompanys.value.findIndex((item) => item === value);
+    if (index === -1) {
+      checkCompanys.value.push(value);
+    } else {
+      checkCompanys.value.splice(index, 1);
+    }
+    // 只要checkCompanys中有值，就把'all'放进去
+    const allIndex = checkCompanys.value.findIndex((item) => item === 'all');
+    if (checkCompanys.value.length > 0 && allIndex === -1) {
+      checkCompanys.value.push('all');
+    }
+    // 如果checkCompanys中只剩下'all'，就把'all'去掉
+    if (checkCompanys.value.length === 1 && allIndex !== -1) {
+      checkCompanys.value.push('all');
+      checkCompanys.value = [];
+      return;
+    }
+    checkCompanys.value = cloneDeep(checkCompanys.value);
+  };
+
+  /**
+   * 全选点击事件
+   */
+  const handleChangeAll = () => {
+    if (checkCompanys.value.length < companys.value.length + 1) {
+      checkCompanys.value = [...cloneDeep(companys.value), 'all'];
+    } else {
+      checkCompanys.value = [];
+    }
+  };
+
+  // 控制半选状态
+  const indeterminate = ref(false);
+  watch(checkCompanys, (value) => {
+    if (value.length === 0 || value.length === companys.value.length + 1) {
+      indeterminate.value = false;
+    } else {
+      indeterminate.value = true;
+    }
+  });
 </script>
 
 <style lang="less" scoped>
   .container {
     background-color: var(--color-fill-2);
-    padding: 16px 20px;
-    padding-bottom: 0;
     display: flex;
+    height: calc(100vh - 60px);
+    .empty {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
   }
 
-  .left-side {
-    flex: 1;
-    overflow: auto;
+  .content-box {
+    background-color: var(--color-fill-2);
+    padding: 12px 20px;
+    width: 100%;
+    overflow: scroll;
   }
-
-  .right-side {
-    width: 280px;
-    margin-left: 16px;
-  }
-
-  .panel {
+  .content-body {
     background-color: var(--color-bg-2);
     border-radius: 4px;
     overflow: auto;
+    width: 100%;
+    padding: 8px 20px 20px 20px;
   }
-  :deep(.panel-border) {
-    margin-bottom: 0;
-    border-bottom: 1px solid rgb(var(--gray-2));
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-  .moduler-wrap {
-    border-radius: 4px;
-    background-color: var(--color-bg-2);
-    :deep(.text) {
-      font-size: 12px;
-      text-align: center;
-      color: rgb(var(--gray-8));
-    }
-
-    :deep(.wrapper) {
-      margin-bottom: 8px;
-      text-align: center;
-      cursor: pointer;
-
-      &:last-child {
-        .text {
-          margin-bottom: 0;
-        }
-      }
-      &:hover {
-        .icon {
-          color: rgb(var(--arcoblue-6));
-          background-color: #e8f3ff;
-        }
-        .text {
-          color: rgb(var(--arcoblue-6));
-        }
-      }
-    }
-
-    :deep(.icon) {
-      display: inline-block;
-      width: 32px;
-      height: 32px;
-      margin-bottom: 4px;
-      color: rgb(var(--dark-gray-1));
-      line-height: 32px;
-      font-size: 16px;
-      text-align: center;
-      background-color: rgb(var(--gray-1));
-      border-radius: 4px;
-    }
+  :deep(.arco-checkbox-icon-hover) {
+    cursor: pointer !important;
   }
-</style>
-
-<style lang="less" scoped>
-  // responsive
-  .mobile {
-    .container {
-      display: block;
-    }
-    .right-side {
-      // display: none;
-      width: 100%;
-      margin-left: 0;
-      margin-top: 16px;
+  :deep(.arco-checkbox-checked) {
+    .arco-checkbox-icon {
+      background-color: rgb(var(--primary-6)) !important;
     }
   }
 </style>

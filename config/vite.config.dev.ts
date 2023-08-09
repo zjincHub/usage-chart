@@ -7,8 +7,16 @@ export default mergeConfig(
     mode: 'development',
     server: {
       open: true,
+      port: 9000,
       fs: {
         strict: true,
+      },
+      proxy: {
+        '/api': {
+          target: 'http://124.222.164.191:97',
+          changeOrigin: true,
+          rewrite: (path: string) => path.replace(/^\/api/, ''),
+        },
       },
     },
     plugins: [

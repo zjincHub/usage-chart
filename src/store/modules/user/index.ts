@@ -12,8 +12,9 @@ import useAppStore from '../app';
 
 const useUserStore = defineStore('user', {
   state: (): UserState => ({
-    name: undefined,
-    avatar: undefined,
+    name: 'admin',
+    avatar:
+      '//lf1-xgcdn-tos.pstatp.com/obj/vcloud/vadmin/start.8e0e4855ee346a46ccff8ff3e24db27b.png',
     job: undefined,
     organization: undefined,
     location: undefined,
@@ -27,7 +28,7 @@ const useUserStore = defineStore('user', {
     registrationDate: undefined,
     accountId: undefined,
     certification: undefined,
-    role: '',
+    role: 'admin',
   }),
 
   getters: {
@@ -63,8 +64,8 @@ const useUserStore = defineStore('user', {
     // Login
     async login(loginForm: LoginData) {
       try {
-        const res = await userLogin(loginForm);
-        setToken(res.data.token);
+        const res: any = await userLogin(loginForm);
+        setToken(res.access_token);
       } catch (err) {
         clearToken();
         throw err;
