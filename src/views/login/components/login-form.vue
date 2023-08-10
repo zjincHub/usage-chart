@@ -1,8 +1,8 @@
 <template>
   <div class="login-form-wrapper">
-    <!-- <div class="login-form-title">{{ $t('login.form.title') }}</div>
-    <div class="login-form-sub-title">{{ $t('login.form.title') }}</div>
-    <div class="login-form-error-msg">{{ errorMessage }}</div> -->
+    <div class="login-form-logo">
+      <img src="@/assets/images/login-logo.png" />
+    </div>
     <a-form
       ref="loginForm"
       :model="userInfo"
@@ -10,7 +10,7 @@
       layout="vertical"
       @submit="handleSubmit"
     >
-      <!-- <a-form-item
+      <a-form-item
         field="username"
         :rules="[{ required: true, message: $t('login.form.userName.errMsg') }]"
         :validate-trigger="['change', 'blur']"
@@ -22,9 +22,10 @@
         >
           <template #prefix>
             <icon-user />
+            <span style="margin-left: 4px">{{ $t('login.form.account') }}</span>
           </template>
         </a-input>
-      </a-form-item> -->
+      </a-form-item>
       <a-form-item
         field="password"
         :rules="[{ required: true, message: $t('login.form.password.errMsg') }]"
@@ -38,6 +39,9 @@
         >
           <template #prefix>
             <icon-lock />
+            <span style="margin-left: 4px">{{
+              $t('login.form.password')
+            }}</span>
           </template>
         </a-input-password>
       </a-form-item>
@@ -50,14 +54,10 @@
           >
             {{ $t('login.form.rememberPassword') }}
           </a-checkbox>
-          <!-- <a-link>{{ $t('login.form.forgetPassword') }}</a-link> -->
         </div>
         <a-button type="primary" html-type="submit" long :loading="loading">
           {{ $t('login.form.login') }}
         </a-button>
-        <!-- <a-button type="text" long class="login-form-register-btn">
-          {{ $t('login.form.register') }}
-        </a-button> -->
       </a-space>
     </a-form>
   </div>
@@ -131,26 +131,15 @@
 <style lang="less" scoped>
   .login-form {
     &-wrapper {
-      width: 320px;
+      width: 340px;
     }
 
-    &-title {
-      color: var(--color-text-1);
-      font-weight: 500;
-      font-size: 24px;
-      line-height: 32px;
-    }
-
-    &-sub-title {
-      color: var(--color-text-3);
-      font-size: 16px;
-      line-height: 24px;
-    }
-
-    &-error-msg {
-      height: 32px;
-      color: rgb(var(--red-6));
-      line-height: 32px;
+    &-logo {
+      width: 100%;
+      margin-bottom: 30px;
+      img {
+        width: 100%;
+      }
     }
 
     &-password-actions {
@@ -158,8 +147,20 @@
       justify-content: space-between;
     }
 
-    &-register-btn {
-      color: var(--color-text-3) !important;
+    :deep(.arco-input-wrapper) {
+      background: transparent !important;
+      border-color: white;
+      color: white;
+      border-radius: 4px;
+    }
+    :deep(.arco-input-prefix) {
+      color: white;
+    }
+    :deep(.arco-form-item + .arco-form-item) {
+      margin-top: 8px;
+    }
+    :deep(.arco-checkbox-label) {
+      color: white;
     }
   }
 </style>

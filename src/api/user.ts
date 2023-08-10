@@ -11,10 +11,9 @@ export interface LoginRes {
   token: string;
 }
 export function login(data: LoginData) {
-  return axios.get<LoginRes>('/api/Token', {
-    params: {
-      pwd: data.password,
-    },
+  return axios.post('/api/LoginUseageBrowse', {
+    UserName: data.username,
+    Password: data.password,
   });
 }
 

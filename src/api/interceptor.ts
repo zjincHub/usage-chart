@@ -69,11 +69,22 @@ axios.interceptors.response.use(
     return res;
   },
   (error) => {
+    const errObj = error.toJSON();
+    if (
+      errObj.config.url === '/api/LoginUseageBrowse' &&
+      errObj.status === 404
+    ) {
+      Message.error({
+        content: '用户名或密码错误',
+        duration: 5 * 1000,
+      });
+      return Promise.reject(error);
+    }
     Message.error({
-      content: error.msg || 'Request Error',
+      content: errObj.message || 'Request Error',
       duration: 5 * 1000,
     });
-    if (error.toJSON().status === 401) {
+    if (errObj.status === 401) {
       router.push({ name: 'login' });
     }
     return Promise.reject(error);
