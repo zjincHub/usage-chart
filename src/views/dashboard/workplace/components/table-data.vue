@@ -243,4 +243,7 @@
       margin-top: 12px;
     }
   }
+  :deep(.arco-icon-question-circle-fill) {
+    color: var(--color-neutral-5);
+  }
 </style>

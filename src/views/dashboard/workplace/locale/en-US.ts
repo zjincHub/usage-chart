@@ -45,6 +45,7 @@ export default {
   'workplace.nodeTotal': 'Node Total',
   'workplace.nodePeak': 'Node Peak',
   'workplace.serviceTime': 'Service Time',
+  'workplace.useCmdCount': 'Command Count',
   'workplace.newInstalledCapacity': 'New Installed Capacity',
   'workplace.date': 'Date',
   'workplace.productDosage': 'Product Dosage',
@@ -77,7 +78,7 @@ export default {
   'workplace.maxOfNodeTitle':
     'The number of points of the day that the product was used the most during the specified time period',
   'workplace.useCmdCountTitle':
-    'The total use time of the product within the specified period',
+    'The number of times the product command is used within the specified period',
   'workplace.macAddTitle':
     'Number of first active installations of the product in the specified period',
   'workplace.checkAll': 'Check All',

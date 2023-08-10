@@ -21,7 +21,7 @@ function getColumns1(t: any) {
       titleSlotName: 'maxOfNodeTitle',
     },
     {
-      title: t('workplace.serviceTime'),
+      title: t('workplace.useCmdCount'),
       dataIndex: 'useCmdCount',
       titleSlotName: 'useCmdCountTitle',
     },

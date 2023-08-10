@@ -44,6 +44,7 @@ export default {
   'workplace.nodeTotal': '节点总量',
   'workplace.nodePeak': '节点峰值',
   'workplace.serviceTime': '使用时长',
+  'workplace.useCmdCount': '命令使用量',
   'workplace.newInstalledCapacity': '新装机量',
   'workplace.date': '日期',
   'workplace.productDosage': '产品用量',
@@ -74,7 +75,7 @@ export default {
   'workplace.sumOfNodeTitle':
     '指定时间段内，该产品共用多少点（一天一台电脑使用计为1个点）',
   'workplace.maxOfNodeTitle': '指定时间段内，该产品用的最多的一天的点数',
-  'workplace.useCmdCountTitle': '指定时间段内，该产品总使用时长',
+  'workplace.useCmdCountTitle': '指定时间段内，该产品命令使用次数',
   'workplace.macAddTitle': '指定时间段内，该产品首次激活安装数量',
   'workplace.checkAll': '全选',
 };
