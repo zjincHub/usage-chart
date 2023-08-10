@@ -57,7 +57,7 @@ function getColumns3(t: any) {
       slotName: 'index',
     },
     {
-      title: t('workplace.index'),
+      title: t('workplace.company'),
       dataIndex: 'company',
     },
     {
