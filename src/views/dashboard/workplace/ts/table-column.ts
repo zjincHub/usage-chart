@@ -44,7 +44,7 @@ function getColumns2(t: any) {
       dataIndex: 'name',
     },
     {
-      title: t('workplace.productDosage'),
+      title: t('workplace.useCmdCount'),
       dataIndex: 'value',
     },
   ];
@@ -61,16 +61,8 @@ function getColumns3(t: any) {
       dataIndex: 'company',
     },
     {
-      title: t('workplace.eMail'),
-      dataIndex: 'eMail',
-    },
-    {
-      title: t('workplace.createTime'),
-      dataIndex: 'createTime',
-    },
-    {
-      title: t('workplace.versions'),
-      dataIndex: 'version',
+      title: t('workplace.account'),
+      dataIndex: 'userName',
     },
     {
       title: t('workplace.computerName'),
@@ -79,10 +71,6 @@ function getColumns3(t: any) {
     {
       title: t('workplace.mac'),
       dataIndex: 'mac',
-    },
-    {
-      title: t('workplace.command'),
-      dataIndex: 'cmd',
     },
     {
       title: t('workplace.time'),
