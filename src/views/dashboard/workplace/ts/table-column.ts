@@ -44,8 +44,12 @@ function getColumns2(t: any) {
       dataIndex: 'name',
     },
     {
-      title: t('workplace.useCmdCount'),
+      title: t('workplace.node'),
       dataIndex: 'value',
+    },
+    {
+      title: t('workplace.useCmdCount'),
+      dataIndex: 'valueCmdCount',
     },
   ];
   return columns;

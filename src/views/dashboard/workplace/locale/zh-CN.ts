@@ -42,6 +42,7 @@ export default {
   'workplace.index': '序号',
   'workplace.productName': '产品名称',
   'workplace.nodeTotal': '节点总量',
+  'workplace.node': '节点',
   'workplace.nodePeak': '节点峰值',
   'workplace.serviceTime': '使用时长',
   'workplace.useCmdCount': '命令使用量',
