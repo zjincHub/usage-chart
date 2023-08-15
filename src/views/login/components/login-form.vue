@@ -2,6 +2,7 @@
   <div class="login-form-wrapper">
     <div class="login-form-logo">
       <img src="@/assets/images/login-logo.png" />
+      <!-- login-form上边的中国交建 用量统计背景图片 -->
     </div>
     <a-form
       ref="loginForm"
