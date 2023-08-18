@@ -35,6 +35,9 @@
           <a-option value="Average">{{ $t('workplace.average') }}</a-option>
         </a-select>
       </a-col>
+
+      <a-button type="primary" @click="exportBtn">导出</a-button>
+
       <a-col flex="120px">
         <a-radio-group v-model:model-value="tableOrChart" type="button">
           <a-radio value="table">{{ $t('workplace.table') }}</a-radio>
@@ -106,6 +109,7 @@
     getProduct,
     Product,
   } from '../api';
+  import * as XLSX from 'xlsx';
 
   const props = defineProps<{ type: string; companys: string[] }>();
   const propsRef = toRefs(props);
@@ -234,6 +238,27 @@
   watch(propsRef.companys, () => {
     getData(propsRef.type.value);
   });
+
+  const exportBtn = () => {
+    // 创建一个工作簿对象
+    const workbook = XLSX.utils.book_new();
+    // 创建一个工作表对象
+    const worksheet = XLSX.utils.json_to_sheet(data.value);
+    // 将工作表添加到工作簿中
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    // 生成Excel文件的二进制数据
+    const excelData = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    // 创建Blob对象
+    const blob = new Blob([excelData], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    // 创建下载链接
+    const downloadLink = document.createElement('a');
+    downloadLink.href = window.URL.createObjectURL(blob);
+    downloadLink.download = 'table.xlsx';
+    // 触发下载
+    downloadLink.click();
+  };
 </script>
 
 <style lang="less" scoped>
