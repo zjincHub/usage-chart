@@ -50,6 +50,7 @@
       class="table"
       :columns="tableColumn"
       :data="data"
+      stripe
       :pagination="pagination"
       @page-change="pageChange"
       @page-size-change="pageSizeChange"
@@ -108,6 +109,7 @@
     UseageParams,
     getProduct,
     Product,
+    useageBrowseData,
   } from '../api';
   import * as XLSX from 'xlsx';
 
@@ -240,10 +242,22 @@
   });
 
   const exportBtn = () => {
+    function renamedArray(arr: useageBrowseData[]) {
+      const result: any[] = [];
+      arr.forEach((item) => {
+        const obj: any = {};
+        const keys: string[] = Object.keys(item);
+        keys.forEach((key) => {
+          obj[t(`workplace.${key}`)] = item[key];
+        });
+        result.push(obj);
+      });
+      return result;
+    }
     // 创建一个工作簿对象
     const workbook = XLSX.utils.book_new();
     // 创建一个工作表对象
-    const worksheet = XLSX.utils.json_to_sheet(data.value);
+    const worksheet = XLSX.utils.json_to_sheet(renamedArray(data.value));
     // 将工作表添加到工作簿中
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
     // 生成Excel文件的二进制数据

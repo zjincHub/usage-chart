@@ -26,6 +26,7 @@ export interface useageBrowseData {
   maxOfNode: number;
   sumOfNode: number;
   useCmdCount: number;
+  [key: string]: any;
 }
 
 export function useageBrowse(params: UseageParams) {
