@@ -36,7 +36,9 @@
         </a-select>
       </a-col>
 
-      <a-button type="primary" @click="exportBtn">导出</a-button>
+      <a-button type="primary" @click="exportBtn">{{
+        $t('workplace.exportbtn')
+      }}</a-button>
 
       <a-col flex="120px">
         <a-radio-group v-model:model-value="tableOrChart" type="button">
@@ -109,7 +111,10 @@
     UseageParams,
     getProduct,
     Product,
-    useageBrowseData,
+    UseageBrowseData,
+    DosageQueryData,
+    UserStatisticsData,
+    FunctionRecordData,
   } from '../api';
   import * as XLSX from 'xlsx';
 
@@ -242,13 +247,25 @@
   });
 
   const exportBtn = () => {
-    function renamedArray(arr: useageBrowseData[]) {
+    function renamedArray(
+      arr:
+        | UseageBrowseData[]
+        | DosageQueryData[]
+        | UserStatisticsData[]
+        | FunctionRecordData[]
+    ) {
       const result: any[] = [];
-      arr.forEach((item) => {
+      arr.forEach((item, index) => {
         const obj: any = {};
+        obj[t('workplace.index')] = index + 1;
         const keys: string[] = Object.keys(item);
         keys.forEach((key) => {
-          obj[t(`workplace.${key}`)] = item[key];
+          if (key !== 'id' && key !== 'machineId') {
+            obj[t(`workplace.${key}`)] = item[key];
+          }
+          if (item.company == null) {
+            delete obj[t('workplace.company')];
+          }
         });
         result.push(obj);
       });

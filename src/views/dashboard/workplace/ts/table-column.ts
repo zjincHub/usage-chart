@@ -11,12 +11,12 @@ function getColumns1(t: any) {
       dataIndex: 'productName',
     },
     {
-      title: t('workplace.nodeTotal'),
+      title: t('workplace.sumOfNode'),
       dataIndex: 'sumOfNode',
       titleSlotName: 'sumOfNodeTitle',
     },
     {
-      title: t('workplace.nodePeak'),
+      title: t('workplace.maxOfNode'),
       dataIndex: 'maxOfNode',
       titleSlotName: 'maxOfNodeTitle',
     },
@@ -26,7 +26,7 @@ function getColumns1(t: any) {
       titleSlotName: 'useCmdCountTitle',
     },
     {
-      title: t('workplace.newInstalledCapacity'),
+      title: t('workplace.macAdd'),
       dataIndex: 'macAdd',
       titleSlotName: 'macAddTitle',
     },
@@ -40,15 +40,15 @@ function getColumns2(t: any) {
       slotName: 'index',
     },
     {
-      title: t('workplace.date'),
+      title: t('workplace.name'),
       dataIndex: 'name',
     },
     {
-      title: t('workplace.node'),
+      title: t('workplace.value'),
       dataIndex: 'value',
     },
     {
-      title: t('workplace.useCmdCount'),
+      title: t('workplace.valueCmdCount'),
       dataIndex: 'valueCmdCount',
     },
   ];
@@ -65,7 +65,7 @@ function getColumns3(t: any) {
       dataIndex: 'company',
     },
     {
-      title: t('workplace.account'),
+      title: t('workplace.userName'),
       dataIndex: 'userName',
     },
     {
@@ -77,7 +77,7 @@ function getColumns3(t: any) {
       dataIndex: 'mac',
     },
     {
-      title: t('workplace.time'),
+      title: t('workplace.cmdCount'),
       dataIndex: 'cmdCount',
     },
   ];
@@ -90,11 +90,11 @@ function getColumns4(t: any) {
       slotName: 'index',
     },
     {
-      title: t('workplace.command'),
+      title: t('workplace.cmdName'),
       dataIndex: 'cmdName',
     },
     {
-      title: t('workplace.time'),
+      title: t('workplace.cmdSum'),
       dataIndex: 'cmdSum',
     },
   ];
