@@ -36,7 +36,15 @@ module.exports = {
     },
   },
   rules: {
-    'prettier/prettier': 1,
+    'prettier/prettier': [
+      1,
+      {
+        endOfLine: 'auto',
+      },
+    ],
+
+    'vue/no-setup-props-destructure': 0,
+    'import/order': 'off',
     // Vue: Recommended rules to be closed or modify
     'vue/require-default-prop': 0,
     'vue/singleline-html-element-content-newline': 0,
@@ -62,10 +70,11 @@ module.exports = {
         tsx: 'never',
       },
     ],
-    'import/order': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'no-param-reassign': 0,
     'prefer-regex-literals': 0,
     'import/no-extraneous-dependencies': 0,
+    'no-plusplus': 0,
+    'no-console': 'off',
   },
 };
