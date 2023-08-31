@@ -80,80 +80,36 @@
       });
       // console.log(jsonData); // 输出转换后的JSON对象
 
-      // 创建一个空数组来存储第四、第五个数据
-      const fourthDataArray: any[] = [];
-      const fiveDataArray: any[] = [];
-
-      const productIds: any[] = [];
-      const usertypevalue: any[] = [];
-
-      // 从第二个数组开始遍历嵌套数组 获取当前数组的第四、第五个数据，并将其存入新数组
       for (let i = 1; i < jsonData.length; i++) {
-        const fourthData = jsonData[i][3];
-        const fiveData = jsonData[i][4];
-        fourthDataArray.push(fourthData);
-        fiveDataArray.push(fiveData);
-      }
+        const productids: any[] = [];
+        jsonData[i][3].split(',').forEach((Item: string) => {
+          const product = Products.find((item) => item.name === Item);
+          productids.push(product?.id);
+        });
 
-      for (let i = 0; i < fourthDataArray.length; i++) {
-        const usertype = UserType.find(
-          (item) => item.name === fiveDataArray[i]
-        );
-        usertypevalue.push(usertype?.value);
-        // console.log(usertypevalue);
+        const usertype = UserType.find((item) => item.name === jsonData[i][4]);
 
-        if (fourthDataArray[i].split(',').length < 2) {
-          const product = Products.find(
-            (item) => item.name === fourthDataArray[i]
-          );
-          productIds.push([product?.id]);
-          // console.log(productId);
-        } else {
-          const productId: any[] = [];
-          fourthDataArray[i].split(',').forEach((item: any) => {
-            const product = Products.find((Item) => Item.name === item);
-            productId.push(product?.id);
-          });
-          productIds.push(productId);
-        }
-      }
-      // console.log(productIds);
-
-      for (let i = 1; i < jsonData.length; i++) {
-        jsonData[i][3] = productIds[i - 1];
-        jsonData[i][4] = usertypevalue[i - 1];
-      }
-      jsonData.splice(0, 1);
-      // console.log(jsonData);
-
-      for (let i = 0; i < jsonData.length; i++) {
-        const jsonDataitem = jsonData[i];
         const convertedItem = {
-          Email: jsonDataitem[0].toString(),
-          Password: jsonDataitem[1].toString(),
-          Company: jsonDataitem[2].toString(),
-          Products: jsonDataitem[3],
-          UserType: jsonDataitem[4],
+          Email: jsonData[i][0].toString(),
+          Password: jsonData[i][1].toString(),
+          Company: jsonData[i][2].toString(),
+          Products: productids,
+          UserType: usertype?.value,
         };
+        console.log(convertedItem);
         lastjsonData.push(convertedItem);
       }
-      // 最终符合上传格式要求的数据
-      console.log(lastjsonData);
-
-      // const jsonString = JSON.stringify(jsonData); // 将 jsonData(数组/json对象) 转换为字符串
-      // const jsonObject = JSON.parse(jsonString); // 将字符串 jsonString 转换为 json 对象
-      // console.log(jsonString); // 输出转换后的JSON对象
     };
     // console.log(lastjsonData);
 
     reader.readAsArrayBuffer(file);
-    // console.log(file);
     return true;
   };
 
   // 清除xlsx文件
   const removeFile = (fileItem: FileItem) => {
     fileList.value = fileList.value.filter((item) => item.uid !== fileItem.uid);
+    // console.log(fileItem);
   };
 
   defineExpose({
