@@ -44,7 +44,12 @@
   import type { FileItem } from '@arco-design/web-vue/es/upload/interfaces';
   import { IconFile, IconClose } from '@arco-design/web-vue/es/icon';
   import { Message, UploadInstance } from '@arco-design/web-vue';
-  import { UserType, Products } from './api';
+  import {
+    userType,
+    products,
+    ProductsFormInter,
+    UserTypeFormInter,
+  } from './api';
   import * as XLSX from 'xlsx';
   import { useI18n } from 'vue-i18n';
 
@@ -52,14 +57,14 @@
   const fileList = ref<FileItem[]>([]);
   const uploadRef = ref<UploadInstance>();
   const lastjsonData: {
-    Email: any;
-    Password: any;
-    Company: any;
-    Products: any;
-    UserType: any;
+    Email: string;
+    Password: string;
+    Company: string;
+    Products: number[];
+    UserType: number;
   }[] = [];
 
-  const beforeUpload = (file: File): boolean | Promise<boolean | File> => {
+  const beforeUpload = (file: File): boolean => {
     if (
       [
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -81,22 +86,33 @@
       // console.log(jsonData); // 输出转换后的JSON对象
 
       for (let i = 1; i < jsonData.length; i++) {
-        const productids: any[] = [];
+        const productids: number[] = [];
         jsonData[i][3].split(',').forEach((Item: string) => {
-          const product = Products.find((item) => item.name === Item);
-          productids.push(product?.id);
+          const product = products.find(
+            (item: ProductsFormInter) => item.name === Item
+          ) as ProductsFormInter;
+          productids.push(product.id);
         });
 
-        const usertype = UserType.find((item) => item.name === jsonData[i][4]);
+        const usertype = userType.find(
+          (item: UserTypeFormInter) => item.name === jsonData[i][4]
+        ) as UserTypeFormInter;
+        // console.log(usertype);
 
-        const convertedItem = {
+        const convertedItem: {
+          Email: string;
+          Password: string;
+          Company: string;
+          Products: number[];
+          UserType: number;
+        } = {
           Email: jsonData[i][0].toString(),
           Password: jsonData[i][1].toString(),
           Company: jsonData[i][2].toString(),
           Products: productids,
-          UserType: usertype?.value,
+          UserType: usertype.value,
         };
-        console.log(convertedItem);
+        // console.log(convertedItem);
         lastjsonData.push(convertedItem);
       }
     };

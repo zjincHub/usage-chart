@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-export const UserType = [
+export interface UserTypeFormInter {
+  value: number;
+  name: string;
+}
+
+export const userType: UserTypeFormInter[] = [
   {
     value: 0,
     name: '外部',
@@ -27,7 +32,16 @@ export const UserType = [
   },
 ];
 
-export const Products = [
+export interface ProductsFormInter {
+  id: number;
+  name: string;
+  description: string;
+  version: string;
+  startTime: string;
+  endTime: string;
+}
+
+export const products: ProductsFormInter[] = [
   {
     id: 2001,
     name: 'ZJRoad',
@@ -78,11 +92,11 @@ export const Products = [
   },
 ];
 
-export interface addUserFormInter {
+export interface AddUserFormInter {
   Email: string;
   Password: string;
   Company: string;
-  Products: [];
+  Products: number[];
   UserType: string;
 }
 

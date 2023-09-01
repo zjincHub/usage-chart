@@ -26,15 +26,15 @@
 
     <a-row :gutter="16" style="position: relative" class="row-header">
       <a-col flex="320px">
-        <a-radio-group v-model:model-value="DefaultOrImportExcel" type="button">
-          <a-radio value="Default">{{ $t('adduser.default') }}</a-radio>
-          <a-radio value="ImportExcel">{{ $t('adduser.importexcel') }}</a-radio>
+        <a-radio-group v-model:model-value="defaultOrImportExcel" type="button">
+          <a-radio value="default">{{ $t('adduser.default') }}</a-radio>
+          <a-radio value="importexcel">{{ $t('adduser.importexcel') }}</a-radio>
         </a-radio-group>
       </a-col>
     </a-row>
 
     <a-form
-      v-if="DefaultOrImportExcel === 'Default'"
+      v-if="defaultOrImportExcel === 'default'"
       ref="formRef"
       :model="addUserForm"
     >
@@ -131,7 +131,7 @@
               multiple
             >
               <a-option
-                v-for="product in Products"
+                v-for="product in products"
                 :key="`${product.id}-${product.name}`"
                 :value="product.id"
                 :label="product.name"
@@ -161,7 +161,7 @@
               allow-search
             >
               <a-option
-                v-for="usertype in UserType"
+                v-for="usertype in userType"
                 :key="`${usertype.value}-${usertype.name}`"
                 :value="usertype.value"
                 :label="usertype.name"
@@ -172,13 +172,16 @@
       </a-row>
     </a-form>
 
-    <adduserexcel v-if="DefaultOrImportExcel === 'ImportExcel'" ref="DATA" />
+    <adduserexcel
+      v-if="defaultOrImportExcel === 'importexcel'"
+      ref="receivedData"
+    />
   </a-modal>
 </template>
 
 <script lang="ts" setup>
   import { ref, reactive, watch } from 'vue';
-  import { addUserFormInter, addUser, UserType, Products } from './api';
+  import { AddUserFormInter, addUser, userType, products } from './api';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { Message } from '@arco-design/web-vue';
   import adduserexcel from './adduserexcel.vue';
@@ -189,9 +192,9 @@
 
   const formRef = ref<FormInstance>();
 
-  const DATA = ref();
+  const receivedData = ref();
 
-  const addUserForm = reactive<addUserFormInter>({
+  const addUserForm = reactive<AddUserFormInter>({
     Email: '',
     Password: '',
     Company: '',
@@ -199,19 +202,18 @@
     UserType: '',
   });
 
-  const props = defineProps({
-    visible: {
-      type: Boolean,
-      default: false,
-    },
-    title: {
-      type: String,
-      default: '',
-    },
-  });
-
+  withDefaults(
+    defineProps<{
+      visible: boolean;
+      title: string;
+    }>(),
+    {
+      visible: false,
+      title: '',
+    }
+  );
   const resetModal = ref(false);
-  const DefaultOrImportExcel = ref<string>('Default');
+  const defaultOrImportExcel = ref<string>('default');
 
   const handleBeforeCancel = () => {
     emit('update:visible', false);
@@ -232,7 +234,7 @@
       ];
       // console.log(params);
 
-      if (DefaultOrImportExcel.value === 'Default') {
+      if (defaultOrImportExcel.value === 'default') {
         const saveRes = await addUser(params);
         if (saveRes) {
           Message.success(t('adduser.success'));
@@ -241,7 +243,7 @@
           Message.error(t('adduser.error'));
         }
       } else {
-        const Params = DATA.value.lastjsonData;
+        const Params = receivedData.value.lastjsonData;
         if (Params.length !== 0) {
           const saveRes = await addUser(Params);
           if (saveRes) {
@@ -265,7 +267,7 @@
       addUserForm.Products = [];
       addUserForm.UserType = '';
       resetModal.value = false;
-      DefaultOrImportExcel.value = 'Default';
+      defaultOrImportExcel.value = 'default';
     }
   );
 </script>
