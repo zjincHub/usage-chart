@@ -14,16 +14,16 @@
 <script lang="ts" setup>
   import { computed } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { useageBrowseData } from '../api';
+  import { UseageBrowseData } from '../api';
 
-  const props = defineProps<{ data: useageBrowseData[] }>();
+  const props = defineProps<{ data: UseageBrowseData[] }>();
 
   const { t } = useI18n();
   const titles = [
-    t('workplace.nodeTotal'),
-    t('workplace.nodePeak'),
+    t('workplace.sumOfNode'),
+    t('workplace.maxOfNode'),
     t('workplace.serviceTime'),
-    t('workplace.newInstalledCapacity'),
+    t('workplace.macAdd'),
   ];
 
   const optionArray = computed(() => {

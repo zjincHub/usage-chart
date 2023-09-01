@@ -130,20 +130,37 @@
           </a-button>
         </a-tooltip>
       </li>
-      <!-- <li> -->
-      <!-- <a-tooltip :content="$t('settings.title')"> -->
-      <!-- <a-button -->
-      <!-- class="nav-btn" -->
-      <!-- type="outline" -->
-      <!-- :shape="'circle'" -->
-      <!-- @click="setVisible" -->
-      <!-- > -->
-      <!-- <template #icon> -->
-      <!-- <icon-settings /> -->
-      <!-- </template> -->
-      <!-- </a-button> -->
-      <!-- </a-tooltip> -->
-      <!-- </li> -->
+
+      <li>
+        <a-tooltip :content="$t('settings.title')">
+          <!--插槽名：content 描述：内容 用来存放气泡显示的内容-->
+          <a-trigger trigger="click">
+            <!--触发器 Trigger 用于对元素添加 hover, click, focus 等事件，并且弹出下拉框。-->
+            <a-button
+              type="outline"
+              shape="circle"
+              class="nav-btn"
+              @click="globalSetDropDownVisible"
+            >
+              <icon-settings />
+            </a-button>
+          </a-trigger>
+          <a-dropdown trigger="click">
+            <div ref="dropdownBtn" class="dropdown-btn"></div>
+            <template #content>
+              <a-doption>
+                <a-space @click="addUser">
+                  <span>
+                    <icon-user-add />
+                    {{ $t('workplace.addUser') }}
+                  </span>
+                </a-space>
+              </a-doption>
+            </template>
+          </a-dropdown>
+        </a-tooltip>
+      </li>
+
       <li>
         <a-dropdown trigger="click">
           <a-avatar
@@ -190,6 +207,8 @@
       </li>
     </ul>
   </div>
+
+  <AddUser v-model:visible="dialogVisible" :title="dialogTitle" />
 </template>
 
 <script lang="ts" setup>
@@ -202,6 +221,16 @@
   import useUser from '@/hooks/user';
   import Menu from '@/components/menu/index.vue';
   import MessageBox from '../message-box/index.vue';
+  import AddUser from './components/adduser.vue';
+  import { useI18n } from 'vue-i18n';
+
+  const { t } = useI18n();
+  const dialogTitle = ref('');
+  const dialogVisible = ref(false);
+  const addUser = () => {
+    dialogTitle.value = t('adduser.title');
+    dialogVisible.value = true;
+  };
 
   const appStore = useAppStore();
   const userStore = useUserStore();
@@ -236,6 +265,7 @@
   };
   const refBtn = ref();
   const triggerBtn = ref();
+  const dropdownBtn = ref();
   const setPopoverVisible = () => {
     const event = new MouseEvent('click', {
       view: window,
@@ -255,6 +285,16 @@
     });
     triggerBtn.value.dispatchEvent(event);
   };
+
+  const globalSetDropDownVisible = () => {
+    const event = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+    });
+    dropdownBtn.value.dispatchEvent(event);
+  };
+
   const switchRoles = async () => {
     const res = await userStore.switchRoles();
     Message.success(res as string);
@@ -310,6 +350,11 @@
     }
     .trigger-btn {
       margin-left: 14px;
+    }
+    .dropdown-btn {
+      position: absolute;
+      top: 46px;
+      right: 105px;
     }
   }
 </style>

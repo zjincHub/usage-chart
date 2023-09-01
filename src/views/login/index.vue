@@ -15,7 +15,7 @@
     height: 100vh;
     background-image: url('@/assets/images/login-background.png');
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
     .content {
       position: relative;
       display: flex;
