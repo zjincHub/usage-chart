@@ -116,6 +116,8 @@ export default {
   'adduser.error': '添加失败',
   'adduser.unimportexcel': '未添加文件',
   'adduser.importexcel.format': '请上传正确的xls格式',
+  'adduser.importexcel.deletecheck': '删除校验',
+  'adduser.importexcel.deletecheck.content': '确认删除',
 
   'workplace.sumOfNodeTitle':
     '指定时间段内，该产品共用多少点（一天一台电脑使用计为1个点）',

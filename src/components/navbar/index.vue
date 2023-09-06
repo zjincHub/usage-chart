@@ -145,20 +145,20 @@
               <icon-settings />
             </a-button>
           </a-trigger>
-          <a-dropdown trigger="click">
-            <div ref="dropdownBtn" class="dropdown-btn"></div>
-            <template #content>
-              <a-doption>
-                <a-space @click="addUser">
-                  <span>
-                    <icon-user-add />
-                    {{ $t('workplace.addUser') }}
-                  </span>
-                </a-space>
-              </a-doption>
-            </template>
-          </a-dropdown>
         </a-tooltip>
+        <a-dropdown trigger="click">
+          <div ref="dropdownBtn" class="dropdown-btn"></div>
+          <template #content>
+            <a-doption>
+              <a-space @click="addUser">
+                <span>
+                  <icon-user-add />
+                  {{ $t('workplace.addUser') }}
+                </span>
+              </a-space>
+            </a-doption>
+          </template>
+        </a-dropdown>
       </li>
 
       <li>
