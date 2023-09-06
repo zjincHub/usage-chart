@@ -110,6 +110,8 @@ export default {
   'adduser.importexcel.tip': 'Supports xlsx and xls',
   'adduser.unimportexcel': 'Unadded file',
   'adduser.importexcel.format': 'Please upload the correct xls format',
+  'adduser.importexcel.deletecheck': 'Delete check',
+  'adduser.importexcel.deletecheck.content': 'Confirm deletion',
 
   'workplace.sumOfNodeTitle':
     'How many points are shared by the product in a given period of time (1 point per computer per day)',

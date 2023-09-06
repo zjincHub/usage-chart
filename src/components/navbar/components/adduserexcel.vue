@@ -11,39 +11,17 @@
     :tip="$t('adduser.importexcel.tip')"
     :show-link="true"
     @before-upload="beforeUpload"
+    @before-remove="beforeRemove"
   >
-    <template #upload-item="{ fileItem }">
-      <div :key="fileItem.uid" class="arco-upload-list-item">
-        <div class="arco-upload-list-item-content">
-          <span class="arco-upload-list-item-thumbnail">
-            <IconFile />
-          </span>
-          <div class="arco-upload-list-item-name">
-            <div class="arco-upload-list-item-name-text">{{
-              fileItem.name
-            }}</div>
-          </div>
-        </div>
-        <span
-          class="arco-upload-list-item-operation"
-          @click="removeFile(fileItem)"
-        >
-          <span class="arco-icon-hover">
-            <span class="arco-upload-icon arco-upload-icon-remove">
-              <IconClose />
-            </span>
-          </span>
-        </span>
-      </div>
-    </template>
   </a-upload>
+  <!-- multiple 是否支持多文件上传 -->
+  <!-- file-list 文件列表 -->
 </template>
 
 <script lang="ts" setup>
   import { ref } from 'vue';
   import type { FileItem } from '@arco-design/web-vue/es/upload/interfaces';
-  import { IconFile, IconClose } from '@arco-design/web-vue/es/icon';
-  import { Message, UploadInstance } from '@arco-design/web-vue';
+  import { Message, Modal, UploadInstance } from '@arco-design/web-vue';
   import {
     userType,
     products,
@@ -123,9 +101,23 @@
   };
 
   // 清除xlsx文件
-  const removeFile = (fileItem: FileItem) => {
-    fileList.value = fileList.value.filter((item) => item.uid !== fileItem.uid);
-    // console.log(fileItem);
+  const beforeRemove = (fileItem: FileItem): Promise<boolean> => {
+    return new Promise((resolve) => {
+      Modal.confirm({
+        title: t('adduser.importexcel.deletecheck'),
+        content: `${t('adduser.importexcel.deletecheck.content')} ${
+          fileItem.name
+        }`,
+        okText: t('adduser.ok'),
+        cancelText: t('adduser.cancle'),
+        maskClosable: false,
+        onOk: () => {
+          lastjsonData.length = 0;
+          resolve(true);
+        },
+        onCancel: () => resolve(false),
+      });
+    });
   };
 
   defineExpose({
