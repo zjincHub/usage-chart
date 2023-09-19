@@ -94,7 +94,7 @@ export const products: ProductsFormInter[] = [
 
 export interface AddUserFormInter {
   Email: string;
-  Password: string;
+  Name: string;
   Company: string;
   Products: number[];
   UserType: string;

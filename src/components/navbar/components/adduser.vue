@@ -49,10 +49,6 @@
                 required: true,
                 message: $t('adduser.emailrules.message'),
               },
-              {
-                match: /[\w.-]+@[\w.-]+\.[\w.-]+/,
-                message: $t('adduser.email.incorrectformat'),
-              },
             ]"
             label-col-flex="76px"
           >
@@ -64,24 +60,20 @@
         </a-col>
         <a-col flex="320px">
           <a-form-item
-            field="Password"
-            :label="$t('adduser.password')"
+            field="Name"
+            :label="$t('adduser.name')"
             label-col-flex="76px"
             validate-trigger="input"
             :rules="[
               {
                 required: true,
-                message: $t('adduser.passwordrules.message'),
-              },
-              {
-                match: /^[a-zA-Z0-9]+$/, // 匹配英文数字混合
-                message: $t('adduser.password.incorrectformat'),
+                message: $t('adduser.namerules.message'),
               },
             ]"
           >
             <a-input
-              v-model="addUserForm.Password"
-              :placeholder="$t('adduser.password.placeholder')"
+              v-model="addUserForm.Name"
+              :placeholder="$t('adduser.name.placeholder')"
             />
           </a-form-item>
         </a-col>
@@ -96,10 +88,6 @@
               {
                 required: true,
                 message: $t('adduser.companyrules.message'),
-              },
-              {
-                match: /[\u4e00-\u9fa5a-zA-Z]+/, // 匹配英文中文混合
-                message: $t('adduser.company.incorrectformat'),
               },
             ]"
             label-col-flex="76px"
@@ -196,7 +184,7 @@
 
   const addUserForm = reactive<AddUserFormInter>({
     Email: '',
-    Password: '',
+    Name: '',
     Company: '',
     Products: [],
     UserType: '',
@@ -226,7 +214,7 @@
       const params: any = [
         {
           Email: addUserForm.Email,
-          Password: addUserForm.Password,
+          Password: addUserForm.Name,
           Company: addUserForm.Company,
           Products: addUserForm.Products,
           UserType: addUserForm.UserType,
@@ -262,7 +250,7 @@
     () => resetModal.value === true,
     () => {
       addUserForm.Email = '';
-      addUserForm.Password = '';
+      addUserForm.Name = '';
       addUserForm.Company = '';
       addUserForm.Products = [];
       addUserForm.UserType = '';
