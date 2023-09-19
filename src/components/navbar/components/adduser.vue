@@ -214,7 +214,7 @@
       const params: any = [
         {
           Email: addUserForm.Email,
-          Password: addUserForm.Name,
+          Name: addUserForm.Name,
           Company: addUserForm.Company,
           Products: addUserForm.Products,
           UserType: addUserForm.UserType,
