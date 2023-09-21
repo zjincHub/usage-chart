@@ -9,11 +9,29 @@
           :style="{ width: '200px', marginLeft: '12px' }"
           placeholder="产品名称"
         >
-          <a-option v-for="item in products" :key="item.name">{{
-            item.name
-          }}</a-option>
-          <a-option>Disabled</a-option>
+          <a-option value="0">全部</a-option>
+          <a-option
+            v-for="item in products"
+            :key="`${item.id}-${item.name}`"
+            :label="item.name"
+          ></a-option>
         </a-select>
+
+        <a-select
+          v-if="['5'].includes(props.type)"
+          v-model="formData.productName"
+          :style="{ width: '200px', marginLeft: '12px' }"
+          placeholder="产品名称"
+        >
+          <a-option value="0">全部</a-option>
+          <a-option
+            v-for="item in products"
+            :key="`${item.id}-${item.name}`"
+            :value="item.id"
+            :label="item.name"
+          ></a-option>
+        </a-select>
+
         <a-select
           v-if="['2'].includes(props.type)"
           v-model="formData.timeSelect"
@@ -102,6 +120,7 @@
     getColumns2,
     getColumns3,
     getColumns4,
+    getColumns5,
   } from '../ts/table-column';
   import {
     useageBrowse,
@@ -115,6 +134,7 @@
     DosageQueryData,
     UserStatisticsData,
     FunctionRecordData,
+    usageRecord,
   } from '../api';
   import * as XLSX from 'xlsx';
 
@@ -151,12 +171,14 @@
     try {
       const res: any = await getProduct();
       products.value = res || [];
-      if (products.value.length) formData.productName = products.value[0].name;
+      console.log(products.value);
+
+      if (products.value.length) formData.productName = '0';
     } catch {
       products.value = [];
     }
   };
-  if (['2', '3', '4'].includes(propsRef.type.value)) getProducts();
+  if (['2', '3', '4', '5'].includes(propsRef.type.value)) getProducts();
 
   /**
    * 获取列数据
@@ -170,8 +192,10 @@
       result = computed(() => getColumns2(t));
     } else if (type === '3') {
       result = computed(() => getColumns3(t));
-    } else {
+    } else if (type === '4') {
       result = computed(() => getColumns4(t));
+    } else {
+      result = computed(() => getColumns5(t));
     }
     return result;
   };
@@ -200,20 +224,49 @@
       api = usageQuery;
     } else if (type === '3') {
       api = userStatistics;
-    } else {
+    } else if (type === '4') {
       api = featureLog;
+    } else {
+      api = usageRecord;
     }
+
     try {
-      const res: any = await api(params);
-      if (Array.isArray(res)) {
-        data.value = res;
-        pagination.total = res.length;
-      } else if (res.constructor === Object) {
-        data.value = res.temp || [];
-        pagination.total = res.total;
+      if (type !== '5') {
+        const res: any = await api(params);
+        if (Array.isArray(res)) {
+          data.value = res;
+          pagination.total = res.length;
+        } else if (res.constructor === Object) {
+          data.value = res.temp || [];
+          pagination.total = res.total;
+        } else {
+          data.value = [];
+          pagination.total = 0;
+        }
       } else {
-        data.value = [];
-        pagination.total = 0;
+        const Params: UseageParams = {
+          ProductId: formData.productName,
+          Companys: propsRef.companys.value.filter((item) => item !== 'all'),
+          StartTime: formData.pickDate[0],
+          EndTime: formData.pickDate[1],
+          Statistics: formData.statistics,
+          TimeSelect: formData.timeSelect,
+          ProductName: '666',
+          PageIndex: pagination.current,
+          PageSize: pagination.pageSize,
+          Entity: '',
+        };
+        const res: any = await api(Params);
+        if (Array.isArray(res)) {
+          data.value = res;
+          pagination.total = res.length;
+        } else if (res.constructor === Object) {
+          data.value = res.temp || [];
+          pagination.total = res.total;
+        } else {
+          data.value = [];
+          pagination.total = 0;
+        }
       }
     } catch {
       data.value = [];
@@ -222,20 +275,20 @@
   };
 
   // 2，3，4类型的表需要先获取产品，再获取表格数据
-  if (!['2', '3', '4'].includes(propsRef.type.value)) {
+  if (!['2', '3', '4', '5'].includes(propsRef.type.value)) {
     getData(propsRef.type.value);
   }
 
   // 2，3，4类型的表后端分页
   const pageChange = (val: number) => {
     pagination.current = val;
-    if (['2', '3', '4'].includes(propsRef.type.value)) {
+    if (['2', '3', '4', '5'].includes(propsRef.type.value)) {
       getData(propsRef.type.value);
     }
   };
   const pageSizeChange = (val: number) => {
     pagination.pageSize = val;
-    if (['2', '3', '4'].includes(propsRef.type.value)) {
+    if (['2', '3', '4', '5'].includes(propsRef.type.value)) {
       getData(propsRef.type.value);
     }
   };

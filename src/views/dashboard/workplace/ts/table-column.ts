@@ -51,6 +51,10 @@ function getColumns2(t: any) {
       title: t('workplace.valueCmdCount'),
       dataIndex: 'valueCmdCount',
     },
+    {
+      title: t('workplace.productName'),
+      dataIndex: 'productName',
+    },
   ];
   return columns;
 }
@@ -80,6 +84,10 @@ function getColumns3(t: any) {
       title: t('workplace.cmdCount'),
       dataIndex: 'cmdCount',
     },
+    {
+      title: t('workplace.productName'),
+      dataIndex: 'productName',
+    },
   ];
   return columns;
 }
@@ -97,7 +105,50 @@ function getColumns4(t: any) {
       title: t('workplace.cmdSum'),
       dataIndex: 'cmdSum',
     },
+    {
+      title: t('workplace.productName'),
+      dataIndex: 'productName',
+    },
   ];
   return columns;
 }
-export { getColumns1, getColumns2, getColumns3, getColumns4 };
+function getColumns5(t: any) {
+  const columns = [
+    {
+      title: t('workplace.index'),
+      dataIndex: 'index',
+      slotName: 'index',
+    },
+    {
+      title: t('workplace.cmdName'),
+      dataIndex: 'cmd',
+    },
+    {
+      title: t('workplace.company'),
+      dataIndex: 'company',
+    },
+    {
+      title: t('workplace.computerName'),
+      dataIndex: 'computerName',
+    },
+    {
+      title: t('workplace.createTime'),
+      dataIndex: 'createTime',
+    },
+    {
+      title: t('workplace.productName'),
+      dataIndex: 'productName',
+    },
+    {
+      title: t('workplace.userType'),
+      dataIndex: 'userType',
+    },
+    {
+      title: t('workplace.versions'),
+      dataIndex: 'version',
+    },
+  ];
+  return columns;
+}
+
+export { getColumns1, getColumns2, getColumns3, getColumns4, getColumns5 };

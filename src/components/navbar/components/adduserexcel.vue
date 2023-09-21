@@ -36,7 +36,7 @@
   const uploadRef = ref<UploadInstance>();
   const lastjsonData: {
     Email: string;
-    Password: string;
+    Name: string;
     Company: string;
     Products: number[];
     UserType: number;
@@ -79,13 +79,13 @@
 
         const convertedItem: {
           Email: string;
-          Password: string;
+          Name: string;
           Company: string;
           Products: number[];
           UserType: number;
         } = {
           Email: jsonData[i][0].toString(),
-          Password: jsonData[i][1].toString(),
+          Name: jsonData[i][1].toString(),
           Company: jsonData[i][2].toString(),
           Products: productids,
           UserType: usertype.value,

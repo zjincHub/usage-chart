@@ -39,6 +39,7 @@ export default {
   'workplace.usageQuery': '用量查询',
   'workplace.userStatistics': '用户统计',
   'workplace.featureLog': '功能记录',
+  'workplace.usageHistory': '使用记录',
   'workplace.id': '序号',
   'workplace.index': '序号',
 
@@ -62,6 +63,7 @@ export default {
   'workplace.startTime': '开始时间',
   'workplace.entryTime': '迁入时间',
   'workplace.versions': '版本',
+  'workplace.userType': '用户类型',
   'workplace.computerName': '计算机名',
   'workplace.userName': '账号',
   'workplace.mac': 'MAC',

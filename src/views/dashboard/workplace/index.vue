@@ -46,6 +46,9 @@
           <a-tab-pane key="4" :title="$t('workplace.featureLog')">
             <table-data type="4" :companys="checkCompanys" />
           </a-tab-pane>
+          <a-tab-pane key="5" :title="$t('workplace.usageHistory')">
+            <table-data type="5" :companys="checkCompanys" />
+          </a-tab-pane>
         </a-tabs>
       </div>
     </div>
