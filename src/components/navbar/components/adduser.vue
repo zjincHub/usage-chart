@@ -17,9 +17,12 @@
           <a-button @click="handleBeforeCancel">{{
             $t('adduser.cancle')
           }}</a-button>
-          <a-button type="primary" @click="handleBeforeOk">{{
-            $t('adduser.ok')
-          }}</a-button>
+          <a-button
+            type="primary"
+            :loading="btnLoading"
+            @click="handleBeforeOk"
+            >{{ $t('adduser.ok') }}</a-button
+          >
         </a-space>
       </div>
     </template>
@@ -178,6 +181,7 @@
   const { t } = useI18n();
   const emit = defineEmits(['update:visible']);
 
+  const btnLoading = ref(false);
   const formRef = ref<FormInstance>();
 
   const receivedData = ref();
@@ -209,6 +213,7 @@
   };
 
   const handleBeforeOk = async () => {
+    btnLoading.value = true;
     const res = await formRef.value?.validate();
     if (!res) {
       const params: any = [
@@ -225,6 +230,7 @@
       if (defaultOrImportExcel.value === 'default') {
         const saveRes = await addUser(params);
         if (saveRes) {
+          btnLoading.value = false;
           Message.success(t('adduser.success'));
           handleBeforeCancel();
         } else {
@@ -236,6 +242,7 @@
           const saveRes = await addUser(Params);
           if (saveRes) {
             Message.success(t('adduser.success'));
+            btnLoading.value = false;
             handleBeforeCancel();
           } else {
             Message.error(t('adduser.error'));

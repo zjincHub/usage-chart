@@ -79,6 +79,11 @@ export function userStatistics(params: UseageParams) {
 export function featureLog(params: UseageParams) {
   return axios.post<FunctionRecordData>('/api/CmdStatistics', params);
 }
+
+export function usageRecord(params: any) {
+  return axios.post('/api/UserHistoriesDetail', params);
+}
+
 export function getCompanys() {
   return axios.get<string[]>('/api/Companys');
 }
