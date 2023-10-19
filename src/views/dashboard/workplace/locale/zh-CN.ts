@@ -103,16 +103,22 @@ export default {
   'adduser.company': '公司',
   'adduser.products': '产品',
   'adduser.usertype': '用户类型',
+  'adduser.days': '天数',
+
   'adduser.email.placeholder': '请输入邮箱',
   'adduser.name.placeholder': '请输入姓名',
   'adduser.company.placeholder': '请输入公司',
   'adduser.products.placeholder': '请选择产品',
   'adduser.usertype.placeholder': '请选择用户类型',
+  'adduser.days.placeholder': '请输入天数',
+
   'adduser.emailrules.message': '邮箱必填',
   'adduser.namerules.message': '姓名必填',
   'adduser.companyrules.message': '公司必填',
   'adduser.productsrules.message': '产品必填',
   'adduser.usertyperules.message': '用户类型必填',
+  'adduser.daysrules.message': '天数必填',
+
   'adduser.importexcel.tip': '支持xlsx、xls',
   'adduser.success': '添加成功',
   'adduser.error': '添加失败',

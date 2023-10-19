@@ -98,6 +98,7 @@ export interface AddUserFormInter {
   Company: string;
   Products: number[];
   UserType: string;
+  Days: '';
 }
 
 export function addUser(params: any) {

@@ -40,6 +40,7 @@
     Company: string;
     Products: number[];
     UserType: number;
+    Days: string;
   }[] = [];
 
   const beforeUpload = (file: File): boolean => {
@@ -83,12 +84,14 @@
           Company: string;
           Products: number[];
           UserType: number;
+          Days: string;
         } = {
           Email: jsonData[i][0].toString(),
           Name: jsonData[i][1].toString(),
           Company: jsonData[i][2].toString(),
           Products: productids,
           UserType: usertype.value,
+          Days: jsonData[i][5].toString(),
         };
         // console.log(convertedItem);
         lastjsonData.push(convertedItem);
