@@ -16,17 +16,20 @@
             </a-checkbox>
           </div>
         </a-menu-item>
+
         <a-menu-item
           v-for="item in companys"
           :key="item"
           @click.capture.stop="menuItemClick(item)"
         >
-          <template #icon><icon-cloud /></template>
-          <div class="menu-item">
-            <span>{{ item }}</span>
-            <a-checkbox disabled :value="item" @click="menuItemClick(item)">
-            </a-checkbox
-          ></div>
+          <a-tooltip :content="item">
+            <template #icon><icon-cloud /></template>
+            <div class="menu-item">
+              <span> {{ item }}</span>
+              <a-checkbox disabled :value="item" @click="menuItemClick(item)">
+              </a-checkbox
+            ></div>
+          </a-tooltip>
         </a-menu-item>
       </a-menu>
     </a-checkbox-group>

@@ -171,8 +171,6 @@
     try {
       const res: any = await getProduct();
       products.value = res || [];
-      console.log(products.value);
-
       if (products.value.length) formData.productName = '0';
     } catch {
       products.value = [];

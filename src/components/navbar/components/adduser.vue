@@ -8,25 +8,6 @@
     @cancel="handleBeforeCancel"
     @before-ok="handleBeforeOk"
   >
-    <template #footer>
-      <div class="footer">
-        <a-link href="/用户模板.xlsx">{{
-          $t('adduser.downloadtemplate')
-        }}</a-link>
-        <a-space>
-          <a-button @click="handleBeforeCancel">{{
-            $t('adduser.cancle')
-          }}</a-button>
-          <a-button
-            type="primary"
-            :loading="btnLoading"
-            @click="handleBeforeOk"
-            >{{ $t('adduser.ok') }}</a-button
-          >
-        </a-space>
-      </div>
-    </template>
-
     <a-row :gutter="16" style="position: relative" class="row-header">
       <a-col flex="320px">
         <a-radio-group v-model:model-value="defaultOrImportExcel" type="button">
@@ -160,6 +141,26 @@
             </a-select>
           </a-form-item>
         </a-col>
+
+        <a-col flex="320px">
+          <a-form-item
+            field="Days"
+            :label="$t('adduser.days')"
+            validate-trigger="input"
+            :rules="[
+              {
+                required: true,
+                message: $t('adduser.daysrules.message'),
+              },
+            ]"
+            label-col-flex="76px"
+          >
+            <a-input
+              v-model="addUserForm.Days"
+              :placeholder="$t('adduser.days.placeholder')"
+            />
+          </a-form-item>
+        </a-col>
       </a-row>
     </a-form>
 
@@ -192,6 +193,7 @@
     Company: '',
     Products: [],
     UserType: '',
+    Days: '',
   });
 
   withDefaults(
@@ -223,6 +225,7 @@
           Company: addUserForm.Company,
           Products: addUserForm.Products,
           UserType: addUserForm.UserType,
+          Days: addUserForm.Days,
         },
       ];
       // console.log(params);
@@ -261,6 +264,7 @@
       addUserForm.Company = '';
       addUserForm.Products = [];
       addUserForm.UserType = '';
+      addUserForm.Days = '';
       resetModal.value = false;
       defaultOrImportExcel.value = 'default';
     }

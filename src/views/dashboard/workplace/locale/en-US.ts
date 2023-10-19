@@ -99,16 +99,22 @@ export default {
   'adduser.company': 'Company',
   'adduser.products': 'Products',
   'adduser.usertype': 'UserType',
+  'adduser.days': 'Days',
+
   'adduser.email.placeholder': 'Please enter email',
   'adduser.name.placeholder': 'Please enter name',
   'adduser.company.placeholder': 'Please enter company',
   'adduser.products.placeholder': 'Please select products',
   'adduser.usertype.placeholder': 'Please select usertype',
+  'adduser.days.placeholder': 'Please select days',
+
   'adduser.emailrules.message': 'Email required',
   'adduser.namerules.message': 'Name required',
   'adduser.companyrules.message': 'Company required',
   'adduser.productsrules.message': 'Products required',
   'adduser.usertyperules.message': 'UserType required',
+  'adduser.daysrules.message': 'Days required',
+
   'adduser.importexcel.tip': 'Supports xlsx and xls',
   'adduser.unimportexcel': 'Unadded file',
   'adduser.importexcel.format': 'Please upload the correct xls format',
