@@ -130,7 +130,7 @@
       pageIndex: 1,
       pageSize: 100,
     };
-    const res = await viewUser(params);
+    const res: any = await viewUser(params);
     if (res) {
       console.log(res);
       dataSource.value = res.temp;
