@@ -22,14 +22,30 @@
           :key="item"
           @click.capture.stop="menuItemClick(item)"
         >
-          <a-tooltip :content="item">
-            <template #icon><icon-cloud /></template>
-            <div class="menu-item">
-              <span> {{ item }}</span>
+          <template #icon><icon-cloud /></template>
+          <a-row>
+            <a-col :flex="1">
+              <a-typography-paragraph
+                :ellipsis="{
+                  showTooltip: {
+                    type: 'tooltip',
+                    props: {
+                      style: { maxWidth: `500px` },
+                    },
+                  },
+                  css: false,
+                }"
+                style="width: 175px; padding-top: 10px"
+              >
+                <div class="menu-item">
+                  <span> {{ item }}</span>
+                </div>
+              </a-typography-paragraph></a-col
+            >
+            <a-col :flex="1">
               <a-checkbox disabled :value="item" @click="menuItemClick(item)">
-              </a-checkbox
-            ></div>
-          </a-tooltip>
+              </a-checkbox></a-col
+          ></a-row>
         </a-menu-item>
       </a-menu>
     </a-checkbox-group>
@@ -66,6 +82,19 @@
 
   const companys = ref([]);
   const checkCompanys = ref<string[]>([]);
+
+  // 如果采用气泡的话 需要写自定义指令
+  // const tooltipVisible = ref();
+  // const isVisible = (item: any) => {
+  //   const elements = document.querySelectorAll(item);
+  //   console.log(elements.length);
+  //   if (elements.length <= 250) {
+  //     tooltipVisible.value = false;
+  //   } else {
+  //     tooltipVisible.value = true;
+  //   }
+  //   return tooltipVisible;
+  // };
 
   /**
    * 获取公司列表
@@ -161,10 +190,12 @@
     padding: 8px 20px 20px 20px;
   }
   .menu-item {
+    width: 210px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
   :deep(.arco-checkbox-icon-hover) {
     cursor: pointer !important;
   }
