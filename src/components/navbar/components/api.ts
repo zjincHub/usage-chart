@@ -104,3 +104,7 @@ export interface AddUserFormInter {
 export function addUser(params: any) {
   return axios.post('/api/UserAdd', params);
 }
+
+export function viewUser(params: any) {
+  return axios.get('/api/DeserializeFromXmlUser', { params });
+}

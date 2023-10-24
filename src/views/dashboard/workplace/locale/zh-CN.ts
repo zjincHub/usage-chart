@@ -56,6 +56,7 @@ export default {
   'workplace.valueCmdCount': '命令使用量',
   'workplace.macAdd': '新装机量',
 
+  'workplace.userList': '用户列表',
   'workplace.date': '日期',
   'workplace.name': '日期',
   'workplace.productDosage': '产品用量',
@@ -76,6 +77,7 @@ export default {
   'workplace.company': '公司',
   'workplace.account': '账号',
   'workplace.createTime': '创建时间',
+  'workplace.endTime': '结束时间',
   'workplace.eMail': 'eMail',
   'workplace.day': '天',
   'workplace.month': '月',
@@ -89,6 +91,7 @@ export default {
   'workplace.exportbtn': '导出',
 
   'workplace.addUser': '添加用户',
+  'workplace.viewUser': '查看用户',
   'adduser.email.incorrectformat': '邮箱格式不正确',
   'adduser.name.incorrectformat': '姓名格式不正确',
   'adduser.company.incorrectformat': '公司格式不正确',

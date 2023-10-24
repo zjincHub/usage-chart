@@ -266,7 +266,6 @@
           data.value = res;
           pagination.total = res.length;
         } else if (res.constructor === Object) {
-          console.log(res.temp);
           for (let i = 0; i < res.temp.length; i++) {
             const createTime = res.temp[i].createTime.split('.')[0];
             res.temp[i].createTime = createTime;

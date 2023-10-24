@@ -228,7 +228,6 @@
           Days: addUserForm.Days,
         },
       ];
-      // console.log(params);
 
       if (defaultOrImportExcel.value === 'default') {
         const saveRes = await addUser(params);
