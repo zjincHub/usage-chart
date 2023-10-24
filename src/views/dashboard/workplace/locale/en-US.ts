@@ -50,6 +50,7 @@ export default {
   'workplace.useCmdCount': 'Command Count',
   'workplace.valueCmdCount': 'Command Count',
   'workplace.macAdd': 'New Installed Capacity',
+  'workplace.userList': 'User List',
   'workplace.date': 'Date',
   'workplace.name': 'Date',
   'workplace.node': 'Node',
@@ -72,6 +73,7 @@ export default {
   'workplace.company': 'Company',
   'workplace.account': 'Account',
   'workplace.createTime': 'Creat Time',
+  'workplace.endTime': 'End Time',
   'workplace.eMail': 'eMail',
   'workplace.day': 'Day',
   'workplace.month': 'Month',
@@ -85,6 +87,7 @@ export default {
   'workplace.exportbtn': 'Export',
 
   'workplace.addUser': 'Add User',
+  'workplace.viewUser': 'View User',
   'adduser.email.incorrectformat': 'Email format is incorrect',
   'adduser.name.incorrectformat': 'Name format is incorrect',
   'adduser.company.incorrectformat': 'Company format is incorrect',
