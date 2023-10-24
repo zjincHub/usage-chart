@@ -91,7 +91,7 @@
         slotName: 'name',
       },
       {
-        title: t('adduser.email'), // 邮箱
+        title: t('workplace.account'), // 账号
         dataIndex: 'email',
         slotName: 'email',
       },
@@ -128,7 +128,7 @@
   const tableData = async () => {
     const params = {
       pageIndex: 1,
-      pageSize: 100,
+      pageSize: 9999,
     };
     const res: any = await viewUser(params);
     if (res) {
