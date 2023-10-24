@@ -54,9 +54,13 @@
         </a-select>
       </a-col>
 
-      <a-button type="primary" @click="exportBtn">{{
-        $t('workplace.exportbtn')
-      }}</a-button>
+      <a-button
+        v-if="tableOrChart === 'table'"
+        type="secondary"
+        style="height: 32px; width: 56px; margin-right: 10px"
+        @click="exportBtn"
+        >{{ $t('workplace.exportbtn') }}</a-button
+      >
 
       <a-col flex="120px">
         <a-radio-group v-model:model-value="tableOrChart" type="button">
@@ -76,8 +80,9 @@
       @page-size-change="pageSizeChange"
     >
       <template #index="{ rowIndex }">
-        {{ rowIndex + 1 }}
+        {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
       </template>
+
       <template #sumOfNodeTitle="{ column }">
         <span :style="{ marginRight: '8px' }">{{ column.title }}</span>
         <a-tooltip :content="$t('workplace.sumOfNodeTitle')">
@@ -157,7 +162,7 @@
     showTotal: true,
     total: 0,
     showPageSize: true,
-    pageSize: 15,
+    pageSize: 10,
     current: 1,
   });
 
@@ -255,10 +260,17 @@
           Entity: '',
         };
         const res: any = await api(Params);
+        // console.log(res); // res 是一个对象
         if (Array.isArray(res)) {
+          // 判断 res 是否是一个数组
           data.value = res;
           pagination.total = res.length;
         } else if (res.constructor === Object) {
+          console.log(res.temp);
+          for (let i = 0; i < res.temp.length; i++) {
+            const createTime = res.temp[i].createTime.split('.')[0];
+            res.temp[i].createTime = createTime;
+          }
           data.value = res.temp || [];
           pagination.total = res.total;
         } else {
