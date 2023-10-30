@@ -111,6 +111,9 @@
     <div v-else-if="props.type === '1'">
       <chart1 :data="data" />
     </div>
+    <div v-else-if="props.type === '2'"> <chart2 :data="data" /> </div>
+    <div v-else-if="props.type === '3'"> <chart3 :data="data" /> </div>
+    <div v-else-if="props.type === '4'"> <chart4 :data="data" /> </div>
   </div>
 </template>
 
@@ -120,6 +123,10 @@
   import dayjs from 'dayjs';
   import { TableColumnData } from '@arco-design/web-vue';
   import chart1 from './chart-type1.vue';
+  import chart2 from './chart-type2.vue';
+  import chart3 from './chart-type3.vue';
+  import chart4 from './chart-type4.vue';
+
   import {
     getColumns1,
     getColumns2,

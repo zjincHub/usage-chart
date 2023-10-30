@@ -8,6 +8,33 @@
     @cancel="handleBeforeCancel"
     @before-ok="handleBeforeOk"
   >
+    <template #footer>
+      <div v-if="defaultOrImportExcel === 'default'" class="footer">
+        <a-space style="margin-left: 535px">
+          <a-button @click="handleBeforeCancel">{{
+            $t('adduser.cancle')
+          }}</a-button>
+          <a-button type="primary" @click="handleBeforeOk">{{
+            $t('adduser.ok')
+          }}</a-button>
+        </a-space>
+      </div>
+
+      <div v-if="defaultOrImportExcel === 'importexcel'" class="footer">
+        <a-link href="/用户模板.xlsx">{{
+          $t('adduser.downloadtemplate')
+        }}</a-link>
+        <a-space>
+          <a-button @click="handleBeforeCancel">{{
+            $t('adduser.cancle')
+          }}</a-button>
+          <a-button type="primary" @click="handleBeforeOk">{{
+            $t('adduser.ok')
+          }}</a-button>
+        </a-space>
+      </div>
+    </template>
+
     <a-row :gutter="16" style="position: relative" class="row-header">
       <a-col flex="320px">
         <a-radio-group v-model:model-value="defaultOrImportExcel" type="button">

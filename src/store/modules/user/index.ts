@@ -24,6 +24,7 @@ const useUserStore = defineStore('user', {
     accountId: undefined,
     certification: undefined,
     role: 'admin',
+    loginData: undefined,
   }),
 
   getters: {
@@ -58,6 +59,7 @@ const useUserStore = defineStore('user', {
 
     // Login
     async login(loginForm: LoginData) {
+      this.loginData = loginForm.username;
       try {
         const res: any = await userLogin(loginForm);
         setToken(res.access_token);
