@@ -131,10 +131,9 @@
         </a-tooltip>
       </li>
 
-      <li>
+      <li v-if="loginData === 'admin'">
         <a-tooltip :content="$t('settings.title')">
           <!--插槽名：content 描述：内容 用来存放气泡显示的内容-->
-          <!--触发器 Trigger 用于对元素添加 hover, click, focus 等事件，并且弹出下拉框。-->
           <a-button
             type="outline"
             shape="circle"
@@ -157,7 +156,7 @@
             </a-doption>
 
             <a-doption>
-              <a-space @click="viewUser">
+              <a-space @click="viewUserDialog">
                 <span> <icon-user /> {{ $t('workplace.viewUser') }} </span>
               </a-space>
             </a-doption>
@@ -217,7 +216,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, inject } from 'vue';
+  import { computed, ref, inject, onMounted } from 'vue';
   import { Message } from '@arco-design/web-vue';
   import { useDark, useToggle, useFullscreen } from '@vueuse/core';
   import { useAppStore, useUserStore } from '@/store';
@@ -228,6 +227,7 @@
   import AddUser from './components/adduser.vue';
   import ViewUser from './components/viewUser.vue';
   import { useI18n } from 'vue-i18n';
+  import { storeToRefs } from 'pinia';
 
   const { t } = useI18n();
   const dialogTitle = ref('');
@@ -239,12 +239,14 @@
     dialogVisible.value = true;
   };
 
-  const viewUser = () => {
+  const viewUserDialog = () => {
     viewVisible.value = true;
   };
 
   const appStore = useAppStore();
   const userStore = useUserStore();
+  const { loginData } = storeToRefs(userStore);
+
   const { logout } = useUser();
   const { changeLocale, currentLocale } = useLocale();
   const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();

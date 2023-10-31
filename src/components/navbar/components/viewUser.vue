@@ -35,6 +35,7 @@
 </template>
 
 <script lang="ts" setup>
+  import { Message } from '@arco-design/web-vue';
   import { computed, onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { viewUser } from './api';
@@ -132,8 +133,9 @@
     };
     const res: any = await viewUser(params);
     if (res) {
-      console.log(res);
       dataSource.value = res.temp;
+    } else {
+      Message.error('viewUser error');
     }
   };
 
