@@ -170,7 +170,7 @@
             :size="32"
             :style="{ marginRight: '8px', cursor: 'pointer' }"
           >
-            <img alt="avatar" :src="avatar" />
+            <img alt="avatar" src="@/assets/images/zhongjiao.png" />
           </a-avatar>
           <template #content>
             <!-- <a-doption> -->
@@ -251,9 +251,9 @@
   const { changeLocale, currentLocale } = useLocale();
   const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
   const locales = [...LOCALE_OPTIONS];
-  const avatar = computed(() => {
-    return userStore.avatar;
-  });
+  // const avatar = computed(() => { // 动态引用 avatar 地址
+  //   return userStore.avatar;
+  // });
   const theme = computed(() => {
     return appStore.theme;
   });

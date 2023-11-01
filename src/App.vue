@@ -11,6 +11,9 @@
   import zhCN from '@arco-design/web-vue/es/locale/lang/zh-cn';
   import GlobalSetting from '@/components/global-setting/index.vue';
   import useLocale from '@/hooks/locale';
+  import { useUserStore } from '@/store';
+
+  const userStore = useUserStore();
 
   const { currentLocale } = useLocale();
   const locale = computed(() => {
@@ -23,4 +26,6 @@
         return enUS;
     }
   });
+
+  userStore.setLoginData();
 </script>
