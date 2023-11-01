@@ -65,6 +65,7 @@
           >
             <a-input
               v-model="addUserForm.Email"
+              allow-clear
               :placeholder="$t('adduser.email.placeholder')"
             />
           </a-form-item>
@@ -84,6 +85,7 @@
           >
             <a-input
               v-model="addUserForm.Name"
+              allow-clear
               :placeholder="$t('adduser.name.placeholder')"
             />
           </a-form-item>
@@ -105,6 +107,7 @@
           >
             <a-input
               v-model="addUserForm.Company"
+              allow-clear
               :placeholder="$t('adduser.company.placeholder')"
             />
           </a-form-item>
@@ -184,6 +187,7 @@
           >
             <a-input
               v-model="addUserForm.Days"
+              allow-clear
               :placeholder="$t('adduser.days.placeholder')"
             />
           </a-form-item>
@@ -223,7 +227,7 @@
     Days: '',
   });
 
-  withDefaults(
+  const props = withDefaults(
     defineProps<{
       visible: boolean;
       title: string;
@@ -233,12 +237,10 @@
       title: '',
     }
   );
-  const resetModal = ref(false);
   const defaultOrImportExcel = ref<string>('default');
 
   const handleBeforeCancel = () => {
     emit('update:visible', false);
-    resetModal.value = true;
   };
 
   const handleBeforeOk = async () => {
@@ -283,15 +285,14 @@
     }
   };
   watch(
-    () => resetModal.value === true,
+    () => props.visible,
     () => {
       addUserForm.Email = '';
       addUserForm.Name = '';
       addUserForm.Company = '';
-      addUserForm.Products = [];
-      addUserForm.UserType = '';
-      addUserForm.Days = '';
-      resetModal.value = false;
+      addUserForm.Products = [2001, 2002, 2003, 2004, 2005, 2006];
+      addUserForm.UserType = '3';
+      addUserForm.Days = '365';
       defaultOrImportExcel.value = 'default';
     }
   );

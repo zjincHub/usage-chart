@@ -1,33 +1,33 @@
 import axios from 'axios';
 
 export interface UserTypeFormInter {
-  value: number;
+  value: string;
   name: string;
 }
 
 export const userType: UserTypeFormInter[] = [
   {
-    value: 0,
+    value: '0',
     name: '外部',
   },
   {
-    value: 1,
+    value: '1',
     name: '开发',
   },
   {
-    value: 2,
+    value: '2',
     name: '测试',
   },
   {
-    value: 3,
+    value: '3',
     name: '应用',
   },
   {
-    value: 4,
+    value: '4',
     name: '领导',
   },
   {
-    value: 5,
+    value: '5',
     name: '其他',
   },
 ];
@@ -98,7 +98,7 @@ export interface AddUserFormInter {
   Company: string;
   Products: number[];
   UserType: string;
-  Days: '';
+  Days: string;
 }
 
 export function addUser(params: any) {
