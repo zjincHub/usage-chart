@@ -39,7 +39,7 @@
     Name: string;
     Company: string;
     Products: number[];
-    UserType: number;
+    UserType: string;
     Days: string;
   }[] = [];
 
@@ -83,7 +83,7 @@
           Name: string;
           Company: string;
           Products: number[];
-          UserType: number;
+          UserType: string;
           Days: string;
         } = {
           Email: jsonData[i][0].toString(),
